@@ -1,0 +1,29 @@
+apiVersion: rbac.istio.io/v1alpha1
+kind: ServiceRole
+metadata:
+  name: service
+  namespace: demo
+spec:
+  rules:
+  - methods:
+    - GET
+    paths:
+    - /
+    services:
+    - nginx.demo.svc.cluster.local
+
+---
+
+apiVersion: rbac.istio.io/v1alpha1
+kind: ServiceRoleBinding
+metadata:
+  name: bind-service
+  namespace: demo
+spec:
+  roleRef:
+    kind: ServiceRole
+    name: service
+  subjects:
+  - properties:
+      request.auth.claims[group]: nginx
+      

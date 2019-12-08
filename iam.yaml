@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iam
+  namespace: demo
+  labels:
+    app: iam
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iam
+  template:
+    metadata:
+      labels:
+        app: iam
+    spec:
+      containers:
+      - name: iam
+        imagePullPolicy: Always
+        image: reist/iam:latest
+        ports:
+        - containerPort: 8080
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: iam
+  namespace: demo
+spec:
+  type: ClusterIP
+  ports:
+  - name: http-iam
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: iam

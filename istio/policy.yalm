@@ -1,0 +1,13 @@
+apiVersion: authentication.istio.io/v1alpha1
+kind: Policy
+metadata:
+  name: auth-token
+  namespace: demo
+spec:
+  origins:
+  - jwt:
+      issuer: testing@secure.istio.io
+      jwksUri: http://localhost:8080/jwk
+  principalBinding: USE_ORIGIN
+  targets:
+  - name: nginx

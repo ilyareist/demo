@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: nginx
+  namespace: demo
+  resourceVersion: "26326"
+  selfLink: /apis/networking.istio.io/v1alpha3/namespaces/demo/virtualservices/nginx
+  uid: 82b32605-3a8c-4f1b-8515-b9376b8ddb8c
+spec:
+  gateways:
+  - http-gateway
+  hosts:
+  - '*'
+  http:
+  - match:
+    - uri:
+        prefix: /
+    rewrite:
+      uri: /
+    route:
+    - destination:
+        host: nginx
+        port:
+          number: 80
+
